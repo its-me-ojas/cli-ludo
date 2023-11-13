@@ -49,8 +49,38 @@ impl GameBoard {
         board[8][2] = 'S';
         board[6][12] = 'S';
         board[2][6] = 'S';
-        board[11][8] = 'S';
+        board[12][8] = 'S';
 
+        // Home Stretch
+        for i in 0..BOARD_SIZE {
+            for j in 0..BOARD_SIZE {
+                if i == 7 && (j != 6 && j != 7 && j != 8) {
+                    board[i][j] = '*';
+                } else if j == 7 && (i != 6 && i != 7 && i != 8) {
+                    board[i][j] = '*';
+                }
+            }
+        }
+
+        // Movement Sqaures
+        for i in 0..BOARD_SIZE {
+            for j in 0..BOARD_SIZE {
+                if i == 6 && (j != 6 && j != 7 && j != 8 && j != 1 && j != 12) {
+                    board[i][j] = '-';
+                } else if i == 8 && (j != 6 && j != 7 && j != 8 && j != 2 && j != 13) {
+                    board[i][j] = '-';
+                }
+            }
+        }
+        for i in 0..BOARD_SIZE {
+            for j in 0..BOARD_SIZE {
+                if j == 6 && (i != 6 && i != 7 && i != 8 && i != 2 && i != 13) {
+                    board[i][j] = '|';
+                } else if j == 8 && (i != 6 && i != 7 && i != 8 && i != 1 && i != 12) {
+                    board[i][j] = '|';
+                }
+            }
+        }
         GameBoard { board }
     }
 
@@ -65,7 +95,7 @@ impl GameBoard {
     }
 }
 
-fn set_tokens_of_player(board: &mut [[char; 15]; 15], players: &[Player; 4]) -> () {
+pub fn set_tokens_of_player(board: &mut [[char; 15]; 15], players: &[Player; 4]) -> () {
     for (index, player) in players.iter().enumerate() {
         let positions = match index {
             0 => &[(2, 2), (2, 3), (3, 2), (3, 3)],
