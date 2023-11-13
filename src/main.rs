@@ -1,4 +1,5 @@
 mod board;
+mod dice;
 mod intro;
 mod player;
 
@@ -12,4 +13,6 @@ fn main() {
 
     let ludo_board = board::GameBoard::new(&players);
     ludo_board.display_board();
+
+    println!("{}", dice::roll_dice());
 }
