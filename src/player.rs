@@ -1,4 +1,4 @@
-struct Player {
+pub struct Player {
     name: String,
     color: String,
     tokens: Vec<Token>,
@@ -7,11 +7,12 @@ struct Player {
 struct Token {
     id: usize,
     position: usize,
+    movable: bool,
 }
 
 impl Player {
     // constructor
-    fn new(name: &str, color: &str) -> Player {
+    pub fn new(name: &str, color: &str) -> Player {
         Player {
             name: String::from(name),
             color: String::from(color),
@@ -19,7 +20,7 @@ impl Player {
         }
     }
 
-    fn display_info(&self) {
+    pub fn display_info(&self) {
         println!("Player: {}", self.name);
         println!("Color: {}", self.color);
         println!("Tokens: ");
@@ -32,6 +33,10 @@ impl Player {
 impl Token {
     // constructor
     fn new(id: usize) -> Token {
-        Token { id, position: 0 }
+        Token {
+            id,
+            position: 0,
+            movable: false,
+        }
     }
 }
