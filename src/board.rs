@@ -1,3 +1,7 @@
+// use colored::*;
+
+use crate::player::Player;
+
 const BOARD_SIZE: usize = 15;
 
 pub struct GameBoard {
@@ -6,43 +10,46 @@ pub struct GameBoard {
 
 impl GameBoard {
     // constructor
-    pub fn new() -> GameBoard {
+    pub fn new(players: &[Player; 4]) -> GameBoard {
         let mut board = [[' '; BOARD_SIZE]; BOARD_SIZE];
 
         // Start zones
-        board[0][0] = 'A';
-        board[0][BOARD_SIZE - 1] = 'B';
-        board[BOARD_SIZE - 1][0] = 'C';
-        board[BOARD_SIZE - 1][BOARD_SIZE - 1] = 'D';
+        board[6][1] = 'R';
+        board[1][8] = 'G';
+        board[8][13] = 'Y';
+        board[13][6] = 'B';
 
-        // Main path
-        for i in 1..BOARD_SIZE - 1 {
-            board[0][i] = '-';
-            board[BOARD_SIZE - 1][i] = '-';
-            board[i][0] = '|';
-            board[i][BOARD_SIZE - 1] = '|';
-        }
-
-        // Safe zones
-        for i in 1..4 {
-            for j in 1..4 {
-                board[i][j] = 'S';
-                board[i][BOARD_SIZE - 1 - j] = 'S';
-                board[BOARD_SIZE - 1 - i][j] = 'S';
-                board[BOARD_SIZE - 1 - i][BOARD_SIZE - 1 - j] = 'S';
+        // Center Square
+        for i in 6..=8 {
+            for j in 6..=8 {
+                board[i][j] = 'X';
             }
         }
 
-        // Home stretch
-        for i in 4..BOARD_SIZE - 4 {
-            board[i][4] = 'H';
-            board[i][BOARD_SIZE - 5] = 'H';
-            board[4][i] = 'H';
-            board[BOARD_SIZE - 5][i] = 'H';
+        // Player tokens
+        set_tokens_of_player(&mut board, players);
+
+        // Player Boundaries
+        for i in 0..BOARD_SIZE {
+            for j in 0..BOARD_SIZE {
+                if (i >= 0 && i <= 5 || i >= 9 && i <= 14)
+                    && (j == 0 || j == 5 || j == 9 || j == 14)
+                {
+                    board[i][j] = '■';
+                }
+                if (j >= 0 && j <= 5 || j >= 9 && j <= 14)
+                    && (i == 0 || i == 5 || i == 9 || i == 14)
+                {
+                    board[i][j] = '■';
+                }
+            }
         }
 
-        // intialising the center sqaure
-        board[7][7] = 'X';
+        // Safe Sqaures
+        board[8][2] = 'S';
+        board[6][12] = 'S';
+        board[2][6] = 'S';
+        board[11][8] = 'S';
 
         GameBoard { board }
     }
@@ -54,6 +61,35 @@ impl GameBoard {
                 print!("{} ", cell);
             }
             println!();
+        }
+    }
+}
+
+fn set_tokens_of_player(board: &mut [[char; 15]; 15], players: &[Player; 4]) -> () {
+    for (index, player) in players.iter().enumerate() {
+        let positions = match index {
+            0 => &[(2, 2), (2, 3), (3, 2), (3, 3)],
+            1 => &[(11, 2), (11, 3), (12, 2), (12, 3)],
+            2 => &[(11, 11), (11, 12), (12, 11), (12, 12)],
+            3 => &[(2, 11), (2, 12), (3, 11), (3, 12)],
+            _ => &[(0, 0); 4],
+        };
+
+        for (i, j) in positions {
+            for token in &player.tokens {
+                board[*i][*j] = if !token.movable {
+                    player
+                        .color
+                        .chars()
+                        .next()
+                        .unwrap_or(' ')
+                        .to_uppercase()
+                        .next()
+                        .unwrap_or(' ')
+                } else {
+                    ' '
+                };
+            }
         }
     }
 }
