@@ -1,13 +1,13 @@
 pub struct Player {
     name: String,
-    color: String,
-    tokens: Vec<Token>,
+    pub color: String,
+    pub tokens: Vec<Token>,
 }
 
-struct Token {
+pub struct Token {
     id: usize,
     position: usize,
-    movable: bool,
+    pub movable: bool,
 }
 
 impl Player {
