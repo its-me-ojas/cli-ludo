@@ -1,4 +1,5 @@
 use crate::player::Player;
+use colored::*;
 
 pub const BOARD_SIZE: usize = 15;
 // static movable_indexes: [(usize,usize);52] = [
@@ -107,7 +108,12 @@ impl GameBoard {
     }
 
     // move tokens
-    pub fn move_token(&mut self, position: Position, steps: usize) -> Position {
+    pub fn move_token(
+        &mut self,
+        position: Position,
+        steps: usize,
+        players: &[Player; 4],
+    ) -> Position {
         let mut current_position = position;
 
         for _ in 0..steps {
@@ -125,7 +131,7 @@ impl GameBoard {
             }
 
             // Display the updated board after each step
-            self.display_board();
+            self.display_board(players);
             println!();
         }
 
@@ -133,10 +139,22 @@ impl GameBoard {
     }
 
     // fn to display the board
-    pub fn display_board(&self) {
-        for row in &self.board {
-            for cell in row {
-                print!("{} ", cell);
+    pub fn display_board(&self, players: &[Player; 4]) {
+        for (i, row) in self.board.iter().enumerate() {
+            for (j, &cell) in row.iter().enumerate() {
+                if cell == '■' {
+                    if i <= 5 && j <= 5 {
+                        print!("{}", "■".red());
+                    } else if i <= 5 && j >= 9 {
+                        print!("{}", "■".green());
+                    } else if i >= 9 && j <= 5 {
+                        print!("{}", "■".blue());
+                    } else {
+                        print!("{}", "■".yellow());
+                    }
+                } else {
+                    print!("{}", cell);
+                }
             }
             println!();
         }
