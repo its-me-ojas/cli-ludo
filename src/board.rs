@@ -144,16 +144,16 @@ impl GameBoard {
             for (j, &cell) in row.iter().enumerate() {
                 if cell == '■' {
                     if i <= 5 && j <= 5 {
-                        print!("{}", "■".red());
+                        print!("{} ", "■".red());
                     } else if i <= 5 && j >= 9 {
-                        print!("{}", "■".green());
+                        print!("{} ", "■".green());
                     } else if i >= 9 && j <= 5 {
-                        print!("{}", "■".blue());
+                        print!("{} ", "■".blue());
                     } else {
-                        print!("{}", "■".yellow());
+                        print!("{} ", "■".yellow());
                     }
                 } else {
-                    print!("{}", cell);
+                    print!("{} ", cell);
                 }
             }
             println!();
