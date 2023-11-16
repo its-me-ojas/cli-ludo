@@ -33,19 +33,19 @@ pub struct GameBoard {
 
 impl GameBoard {
     // constructor
-    pub fn new(players: &[Player; 4]) -> GameBoard {
-        let mut board = [[' '; BOARD_SIZE]; BOARD_SIZE];
+    pub fn new(players: [Player; 4]) -> GameBoard {
+        let mut board = [[" "; BOARD_SIZE]; BOARD_SIZE];
 
         // Start zones
-        board[6][1] = 'R';
-        board[1][8] = 'G';
-        board[8][13] = 'Y';
-        board[13][6] = 'B';
+        board[6][1] = "R";
+        board[1][8] = "G";
+        board[8][13] = "Y";
+        board[13][6] = "B";
 
         // Center Square
         for i in 6..=8 {
             for j in 6..=8 {
-                board[i][j] = 'X';
+                board[i][j] = "X";
             }
         }
 
@@ -58,29 +58,29 @@ impl GameBoard {
                 if (i >= 0 && i <= 5 || i >= 9 && i <= 14)
                     && (j == 0 || j == 5 || j == 9 || j == 14)
                 {
-                    board[i][j] = '■';
+                    board[i][j] = "■";
                 }
                 if (j >= 0 && j <= 5 || j >= 9 && j <= 14)
                     && (i == 0 || i == 5 || i == 9 || i == 14)
                 {
-                    board[i][j] = '■';
+                    board[i][j] = "■";
                 }
             }
         }
 
         // Safe Sqaures
-        board[8][2] = 'S';
-        board[6][12] = 'S';
-        board[2][6] = 'S';
-        board[12][8] = 'S';
+        board[8][2] = "S";
+        board[6][12] = "S";
+        board[2][6] = "S";
+        board[12][8] = "S";
 
         // Home Stretch
         for i in 0..BOARD_SIZE {
             for j in 0..BOARD_SIZE {
                 if i == 7 && (j != 6 && j != 7 && j != 8) {
-                    board[i][j] = '*';
+                    board[i][j] = "*";
                 } else if j == 7 && (i != 6 && i != 7 && i != 8) {
-                    board[i][j] = '*';
+                    board[i][j] = "*";
                 }
             }
         }
@@ -89,18 +89,18 @@ impl GameBoard {
         for i in 0..BOARD_SIZE {
             for j in 0..BOARD_SIZE {
                 if i == 6 && (j != 6 && j != 7 && j != 8 && j != 1 && j != 12) {
-                    board[i][j] = '-';
+                    board[i][j] = "-";
                 } else if i == 8 && (j != 6 && j != 7 && j != 8 && j != 2 && j != 13) {
-                    board[i][j] = '-';
+                    board[i][j] = "-";
                 }
             }
         }
         for i in 0..BOARD_SIZE {
             for j in 0..BOARD_SIZE {
                 if j == 6 && (i != 6 && i != 7 && i != 8 && i != 2 && i != 13) {
-                    board[i][j] = '|';
+                    board[i][j] = "|";
                 } else if j == 8 && (i != 6 && i != 7 && i != 8 && i != 1 && i != 12) {
-                    board[i][j] = '|';
+                    board[i][j] = "|";
                 }
             }
         }
@@ -118,9 +118,9 @@ impl GameBoard {
 
         for _ in 0..steps {
             match self.board[current_position.row][current_position.col] {
-                '-' => current_position.col += 1,
-                '|' => current_position.row += 1,
-                'H' => {
+                "-" => current_position.col += 1,
+                "|" => current_position.row += 1,
+                "H" => {
                     println!("Found an H block");
                     // Implement special behavior for 'H' if needed
                 }
@@ -155,6 +155,7 @@ impl GameBoard {
                 } else {
                     print!("{} ", cell);
                 }
+
             }
             println!();
         }
