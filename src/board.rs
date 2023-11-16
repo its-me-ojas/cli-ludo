@@ -139,7 +139,7 @@ impl GameBoard {
     // }
 
     // fn to display the board
-    pub fn display_board(&self, players: [Player; 4]) {
+    pub fn display_board(&self) {
         for (i, row) in self.board.iter().enumerate() {
             for (j, &cell) in row.iter().enumerate() {
                 if cell == '■' {
@@ -158,6 +158,7 @@ impl GameBoard {
             }
             println!();
         }
+        println!("{}", self.board[2][2]);
     }
 }
 

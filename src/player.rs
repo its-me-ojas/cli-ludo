@@ -29,7 +29,7 @@ impl Player {
         };
         Player {
             name: String::from(name),
-            color: String::from(name),
+            color: String::from(color),
             tokens: vec![Token::new(1), Token::new(2), Token::new(3), Token::new(4)],
             starting_position,
         }
