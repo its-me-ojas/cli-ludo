@@ -1,3 +1,5 @@
+use board::Position;
+
 mod board;
 mod dice;
 mod intro;
@@ -11,8 +13,9 @@ fn main() {
     let player4 = player::Player::new("nvme", "green");
     let players: [player::Player; 4] = [player1, player2, player3, player4];
 
-    let ludo_board = board::GameBoard::new(&players);
+    let mut ludo_board = board::GameBoard::new(&players);
     ludo_board.display_board();
 
-    println!("{}", dice::roll_dice());
+    let dice_number = dice::roll_dice();
+    ludo_board.move_token(Position::new(6, 1), dice_number);
 }

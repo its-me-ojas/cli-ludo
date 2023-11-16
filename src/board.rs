@@ -1,9 +1,31 @@
-// use colored::*;
-
 use crate::player::Player;
 
-const BOARD_SIZE: usize = 15;
+pub const BOARD_SIZE: usize = 15;
+// static movable_indexes: [(usize,usize);52] = [
+//     (6, 0),(6, 1),(6, 2),(6, 3),(6, 4),(6, 5),
+//     (5, 6),(4, 6),(3, 6),(2, 6),(1, 6),(0, 6),
+//     (0, 7),(0, 8),
+//     (1, 8),(2, 8),(3,8),(4,8),(5,8),
+//     (6,9),(6,10),(6,11),(6,12),(6,13),(6,14),
+//     (7,14),(8,14),
+//     (8,13),(8,12),(8,11),(8,10),(8,9),
+//     (9,8),(10,8),(11,8),(12,8),(13,8),(14,8),
+//     (14,7),(14,6),
+//     (13,6),(12,6),(11,6),(10,6),(9,6),
+//     (8,5),(8,4),(8,3),(8,2),(8,1),
+//     (8,0),(7,0)
+// ];
 
+pub struct Position {
+    pub row: usize,
+    pub col: usize,
+}
+
+impl Position {
+    pub fn new(row: usize, col: usize) -> Position {
+        Position { row, col }
+    }
+}
 pub struct GameBoard {
     board: [[char; BOARD_SIZE]; BOARD_SIZE],
 }
@@ -82,6 +104,32 @@ impl GameBoard {
             }
         }
         GameBoard { board }
+    }
+
+    // move tokens
+    pub fn move_token(&mut self, position: Position, steps: usize) -> Position {
+        let mut current_position = position;
+
+        for _ in 0..steps {
+            match self.board[current_position.row][current_position.col] {
+                '-' => current_position.col += 1,
+                '|' => current_position.row += 1,
+                'H' => {
+                    println!("Found an H block");
+                    // Implement special behavior for 'H' if needed
+                }
+                _ => {
+                    println!("Invalid movement Square");
+                    break;
+                }
+            }
+
+            // Display the updated board after each step
+            self.display_board();
+            println!();
+        }
+
+        current_position
     }
 
     // fn to display the board
