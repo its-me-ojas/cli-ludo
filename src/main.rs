@@ -14,8 +14,8 @@ fn main() {
     let players: [player::Player; 4] = [player1, player2, player3, player4];
 
     let mut ludo_board = board::GameBoard::new(&players);
-    ludo_board.display_board();
+    ludo_board.display_board(players);
 
     let dice_number = dice::roll_dice();
-    ludo_board.move_token(Position::new(6, 1), dice_number);
+    // ludo_board.move_token(Position::new(6, 1), dice_number, players);
 }

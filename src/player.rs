@@ -1,8 +1,8 @@
 use std::process;
 
-pub struct Player<'a> {
-    name: &'a str,
-    pub color: &'a str,
+pub struct Player {
+    name: String,
+    pub color: String,
     pub tokens: Vec<Token>,
     pub starting_position: (usize, usize),
 }
@@ -14,9 +14,9 @@ pub struct Token {
     count: usize,
 }
 
-impl<'a> Player<'a> {
+impl Player {
     // constructor
-    pub fn new<'b>(name: &'b str, color: &'b str) -> Player<'b> {
+    pub fn new(name: &str, color: &str) -> Player {
         let starting_position = match color {
             "red" => (6, 1),
             "green" => (6, 1),
@@ -28,8 +28,8 @@ impl<'a> Player<'a> {
             }
         };
         Player {
-            name,
-            color,
+            name: String::from(name),
+            color: String::from(name),
             tokens: vec![Token::new(1), Token::new(2), Token::new(3), Token::new(4)],
             starting_position,
         }
